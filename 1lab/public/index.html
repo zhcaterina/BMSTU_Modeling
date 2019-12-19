@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lab_01</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+
+<h2>Исследование псевдослучайных последовательностей</h2>
+
+<div class="row">
+    <div class="table-responsive col-md-6">
+        <table class="table table-condensed table-striped table-bordered" id="table-1">
+            <thead><tr><th>id</th><th>1 разряд</th><th>2 разряд</th><th>3 разряд</th></tr></thead>
+            <tbody>
+            </tbody>
+        </table>
+        <form name="loadTable">
+
+            <button id="loadTable" type="button" class="btn btn-info btn-lg">Заполнить табличные значения</button>
+        </form>
+    </div>
+    <div class="table-responsive col-md-6">
+        <table class="table table-condensed table-striped table-bordered" id="table-2">
+            <thead><tr><th>id</th><th>1 разряд</th><th>2 разряд</th><th>3 разряд</th></tr></thead>
+            <tbody>
+            </tbody>
+        </table>
+        <form name="loadRandom">
+            <button id="loadRandom" type="button" class="btn btn-info btn-lg">Заполнить алгоритмические значения</button>
+        </form>
+    </div>
+</div><br><br>
+
+<h5>Введите случайную последовательность, через пробел</h5>
+<div class="input-group">
+    <label></label>
+    <input type="text" class="form-control" id="txt">
+    <span class="input-group-btn" id="result">
+            <button type="submit" class="btn btn-info btn-lg" id="btn">Проверить</button>
+        </span>
+</div>
+
+<script>
+    // Получение всех пользователей
+    function loadTablePoints() {
+        $.ajax({
+            url: "/api/table",
+            type: "GET",
+            contentType: "application/json",
+            success: function (json) {
+                let points = json.points;
+                let resCriterions = json.resCriterions;
+
+                $("#table-1 tbody").empty();
+                let rows = "";
+                $.each(points, function (index, point) {
+                    // добавляем полученные элементы в таблицу
+                    rows += row_table(point);
+                });
+                rows += "<tr data-rowid=''><td>Коэффициент случайности<br>последовательности</td><td>" +
+                    resCriterions.oneDigit + "%</td><td>" + resCriterions.twoDigit + "%</td> <td>" +
+                    resCriterions.threeDigit + "%</td>";
+                $("#table-1 tbody").append(rows);
+            }
+        });
+    }
+    // Добавление пользователя
+    function loadRandPoints() {
+        $.ajax({
+            url: "api/random",
+            type: "GET",
+            contentType: "application/json",
+            success: function (json) {
+                let points = json.points;
+                let resCriterions = json.resCriterions;
+
+                $("#table-2 tbody").empty();
+                let rows = "";
+                $.each(points, function (index, point) {
+                    // добавляем полученные элементы в таблицу
+                    rows += row_random(point);
+                });
+                rows += "<tr data-rowid=''><td>Коэффициент случайности<br>последовательности</td><td>" +
+                    resCriterions.oneDigit + "%</td><td>" + resCriterions.twoDigit + "%</td> <td>" +
+                    resCriterions.threeDigit + "%</td>";
+                $("#table-2 tbody").append(rows);
+            }
+        })
+    }
+    // создание строки для таблицы
+    let row_table = function (point) {
+        return "<tr data-rowid='" + point.id + "'><td>" + point.id + "</td>" +
+            "<td>" + point.oneDigit + "</td> <td>" + point.twoDigit + "</td> <td>" + point.threeDigit + "</td>"
+    };
+    let row_random = function (point) {
+        return "<tr data-rowid='" + point.id + "'><td>" + point.id + "</td>" +
+            "<td>" + point.oneDigit + "</td> <td>" + point.twoDigit + "</td> <td>" + point.threeDigit + "</td>"
+    };
+    // отправка формы
+    $("#loadTable").click(function (e) {
+        e.preventDefault();
+        console.log('x');
+        loadTablePoints();
+    });
+    $("#loadRandom").click(function (e) {
+        e.preventDefault();
+        console.log('y');
+        loadRandPoints();
+    });
+
+    $(document).ready(function() {
+
+        var docHeight = $(window).height();
+        var footerHeight = $('#sticky-footer').height();
+        var footerTop = $('#sticky-footer').position().top + footerHeight;
+
+        if (footerTop < docHeight) {
+            $('#sticky-footer').css('margin-top', (docHeight - footerTop -30) + 'px');
+        }
+    });
+    function someFunc() {
+        //alert(document.getElementById("txt").value);
+        $.ajax({
+            url: "api/check",
+            contentType: "application/json",
+            type: "POST",
+            data: JSON.stringify({
+                digital: document.getElementById("txt").value
+            }),
+            success: function (resCriterions) {
+                alert(`Коэффициент случайности последовательности: ${resCriterions}%`);
+            }
+        })
+    }
+    document.getElementById("btn").onclick = someFunc;
+</script>
+
+
+
+</body>
+</html>

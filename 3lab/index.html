@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Лабораторная работа №3</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+</head>
+<body>
+
+<!-- основной участок интерфейса -->
+<main>
+    <div class="text-left"><h2>Исследование функций и плотностей распределения случайных величин</h2></div>
+    <div class="text-left">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons" id="select-form">
+            <label class="btn btn-info btn-lg">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked> Равномерное Распределение
+            </label>
+            <label class="btn btn-info btn-lg">
+                <input type="radio" name="options" id="option2" autocomplete="off"> Распределение Эрланга
+            </label>
+        </div>
+    </div>
+
+    <div class="text-left">
+        <div id="form-view-uniform" style="display: none">
+            <form id="form-uniform">
+                <label>a</label>
+                <input type="number" name="start-a" value="3">
+                <label>b</label>
+                <input type="number" name="stop-b" value="6">
+                <label>start</label>
+                <input type="number" name="start" value="0">
+                <label>stop</label>
+                <input type="number" name="stop" value="10">
+            </form>
+            <button class="btn btn-info btn-lg" id="submit-uniform">Получить результат</button>
+        </div>
+    </div>
+
+    <div class="text-left">
+        <div id="form-view-erlang" style="display: none">
+            <form id="form-erlang">
+                <label>start</label>
+                <input type="number" name="start" value="0">
+                <label>stop</label>
+                <input type="number" name="stop" value="20">
+                <label>lambda</label>
+                <input type="number" name="lambda" value="1">
+                <label>k</label>
+                <input type="number" name="k" value="5">
+            </form>
+            <button class="btn btn-info btn-lg" id="submit-erlang">Получить результат</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <canvas id="densityChart" width="600" height="400"></canvas>
+        <canvas id="functionChart" width="600" height="400"></canvas>
+    </div>
+</main>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
+<script src="js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+:root {
+    /* root указывает на самый верний элемент в иерархии (html обычно) */
+    /* Зададим кастомные свойства на самом верхнем уровне */
+    /* Теперь все элементы на странице их наследуют и могут получить к ним доступ через var(--custom) */
+    --bg: #eeeeee;
+    --primary: #326589;
+    --panels: #94a3ab;
+    --secondary: #1089ff;
+}
+
+/* basic settings  */
+
+/* Устраним нежелательное дефолтное поведение элементов */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* global settings */
+
+body {
+    /* Настройки для всей страницы */
+    font-size: 18px;
+    background: var(--bg);
+    color: var(--primary);
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+
+    display: flex;
+    flex-direction: column;
+}
+
+/* responsive features */
+
+@media (max-width: 600px) {
+    /* рулсет будет применяться только если размер окна <= 600px */
+    body {
+        font-size: 12px;
+    }
+}
+
+/* UI KIT */
+
+input {
+    /* отменим дефолтный цвет фона и рамку */
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid var(--secondary);
+    color: var(--primary);
+    padding: 10px;
+    margin-bottom: 10px;
+    /* время перехода при наведении и нажатии для плавности */
+    transition: 0.3s;
+    /* уберем дефолтную синюю рамку при выделении */
+    outline: none;
+}
+
+input:focus {
+    background: var(--panels);
+}
+
+input:hover {
+    border-color: var(--primary);
+}
+
+button {
+    //background: var(--panels);
+    border: none;
+    //solid #ced4da;
+    //color: var(--primary);
+    padding: 10px;
+    //border:1px solid #ced4da;
+
+    transition: 0.2s;
+    outline: none;
+}
+
+/* сработает при наведении или выделении (при помощи Tab, например) */
+/*button:hover,
+button:focus {
+    color: var(--secondary);
+}*/
+
+/* Сработает при нажатии */
+button:active {
+    /* Уменьшим её немного (см. CSS-трансформации)*/
+    transform: scale(0.9);
+}
+
+/* basic app layout */
+
+.container {
+    max-width: 800px;
+    /* равномерный отсут справа и слева в родительском контейнере */
+    margin: auto;
+}
+
+header,
+footer {
+    /* элемент сам вычисляет свой размер на основе контента и CSS.
+    flex-родитель не участвует в вчислении. */
+    flex: none;
+    background: var(--panels);
+}
+
+footer,
+header,
+main {
+    padding: 10px;
+}
+
+main {
+    flex: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* header styles */
+
+.toolbar {
+    display: flex;
+    /* разнесём заголовок и кнопку темы в разные стороны */
+    justify-content: space-between;
+}
+
+/* MAIN STYLES */
+
+/* vote form */
+
+#form-erlang,
+#form-uniform {
+    display: flex;
+    flex-direction: column;
+}
+
+/* languages list */
+
+.lang {
+    margin-bottom: 20px;
+    background: var(--panels);
+    padding: 10px;
+}
+.bar-wrapper {
+    /* Явно задаем ширину, чтобы ребёнок (bar) мог занять нужный процент ширины */
+    width: 100%;
+    margin: 15px 0;
+}
+.bar {
+    background: var(--secondary);
+    padding: 10px;
+    box-sizing: border-box;
+}
