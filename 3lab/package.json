@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "chart.js": "latest",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "express-logging": "^1.1.1",
     "logops": "^2.1.1",
     "uniform": "^0.5.1"
